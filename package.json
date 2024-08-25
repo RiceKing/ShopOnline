@@ -10,7 +10,11 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.22",
+    "@heroicons/vue": "^2.1.5",
+    "@pinia/nuxt": "^0.5.4",
     "nuxt": "^3.13.0",
+    "pinia": "^2.2.2",
     "vue": "latest"
   },
   "devDependencies": {
