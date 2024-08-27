@@ -28,36 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
 const imageLoaded = ref<boolean>(false);
 const src = ref('');
 
-
-const loadFirstAvailableImage = async (urls: Props["images"]): Promise<string> => {
-    if(!urls) return '';
-    
-    for (const url of urls) {
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error('Image not available');
-            }
-
-            return url
-        } catch (error) {
-            if(error instanceof Error) console.error(`Ошибка загрузки изображения ${url}: ${error.message}`);
-        }
-    }
-
-    return '';
-};
-
 onMounted(() => {
-    // todo избыточно, удалить.
-    // if(props.images.length) loadFirstAvailableImage(props.images).then(availableImage => {
-    //     if (availableImage) src.value = availableImage;
-    //     else src.value = props.image;
-
-    //     imageLoaded.value = true
-    // }) 
-
-
     if(props.images.length) src.value = props.images[0];
     else src.value = props.image; 
 

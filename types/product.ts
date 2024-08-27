@@ -15,7 +15,7 @@ export interface Product {
 }
 
 export interface QueryProducts {
-    priceMin: locationQueryValue | string | number | undefined
-    priceMax: locationQueryValue | string | number | undefined
-    categoryId: locationQueryValue | string | number | undefined
+    priceMin: string | number | undefined
+    priceMax: string | number | undefined
+    categoryId: string | number | undefined
 }
