@@ -49,16 +49,19 @@ const loadFirstAvailableImage = async (urls: Props["images"]): Promise<string> =
 };
 
 onMounted(() => {
-    if(props.images.length) loadFirstAvailableImage(props.images).then(availableImage => {
-        if (availableImage) src.value = availableImage;
-        else src.value = props.image;
+    // todo избыточно, удалить.
+    // if(props.images.length) loadFirstAvailableImage(props.images).then(availableImage => {
+    //     if (availableImage) src.value = availableImage;
+    //     else src.value = props.image;
 
-        imageLoaded.value = true
-    }) 
-    else {
-        src.value = props.image; 
-        imageLoaded.value = true;
-    }
+    //     imageLoaded.value = true
+    // }) 
+
+
+    if(props.images.length) src.value = props.images[0];
+    else src.value = props.image; 
+
+    imageLoaded.value = true
 })
 
 

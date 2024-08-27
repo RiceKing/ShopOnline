@@ -11,10 +11,11 @@ export interface Product {
     description: string;
     category: Category; 
     images: string[]; 
+    quantity: number;
 }
 
 export interface QueryProducts {
-    priceMin: locationQueryValue | string | number | undefined,
-    priceMax: locationQueryValue | string | number | undefined,
-    categoryId: locationQueryValue | string | number | undefined,
+    priceMin: locationQueryValue | string | number | undefined
+    priceMax: locationQueryValue | string | number | undefined
+    categoryId: locationQueryValue | string | number | undefined
 }

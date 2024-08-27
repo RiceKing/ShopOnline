@@ -6,7 +6,7 @@
         </div>
 
         <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form class="space-y-6" action="#" method="POST">
+            <form class="space-y-6" @submit.prevent="handleSubmit">
                 <div>
                     <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Почта</label>
                     <div class="mt-2">
@@ -49,10 +49,14 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+definePageMeta({middleware: ["auth"]})
+
 const email = ref('')
 const password = ref('')
 const emailError = ref('')
 const router = useRouter()
+
+const auth = useAuthStore()
 
 const validateEmail = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -62,8 +66,7 @@ const validateEmail = () => {
 const handleSubmit = () => {
     validateEmail()
     if (!emailError.value && password.value) {
-        // Логика авторизации
-        localStorage.setItem('isAuthenticated', 'true')
+        auth.setAuthenticated(true)
         router.push('/')
     }
 }

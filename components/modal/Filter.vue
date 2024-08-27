@@ -20,7 +20,7 @@
                                 <button type="button"
                                     class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
                                     @click="closeModal">
-                                    <span class="sr-only">Close menu</span>
+                                    <span class="sr-only">Закрыть</span>
                                     <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                                 </button>
                             </div>

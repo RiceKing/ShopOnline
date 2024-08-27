@@ -13,8 +13,8 @@
 
             <section aria-labelledby="products-heading" class="pb-24 pt-6">
                 <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
-                    <form @submit.prevent="submitFilter" class="hidden lg:block">
-                        <SectionsHomeAside :categories="categories" :categorySelected="categorySelected" />
+                    <form @reset.prevent="handleResetFilter" @submit.prevent="submitFilter" class="hidden lg:block">
+                        <SectionsHomeAside class="sticky top-[60px]" :categories="categories" :categorySelected="categorySelected" />
                     </form>
 
                     <div class="lg:col-span-3">
@@ -23,7 +23,7 @@
                 </div>
             </section>
         </div>
-        <SectionsHomeModalsFilter :mobileFiltersOpen="mobileFiltersOpen" @close="mobileFiltersOpen = false" />
+        <ModalFilter :mobileFiltersOpen="mobileFiltersOpen" @close="mobileFiltersOpen = false" />
     </div>
 </template>
 
@@ -31,6 +31,8 @@
 import { FunnelIcon } from '@heroicons/vue/20/solid'
 import { fetchProducts, fetchCategories } from '@/services/productService';
 import type { Product, Category, QueryProducts } from '@/types/product';
+
+definePageMeta({middleware: ["auth"]})
 
 const mobileFiltersOpen = ref(false)
 
@@ -54,7 +56,6 @@ const queryProducts = ref<QueryProducts>({
 
 const loadData = async () => {
     try {
-        console.log('queryproducts', queryProducts.value)
         const [fetchedProducts, fetchedCategories] = await Promise.all([fetchProducts(queryProducts.value), fetchCategories()])
 
         products.value = fetchedProducts
@@ -100,23 +101,19 @@ const addStartOptionCategory = (fetchedCategories: Category[]): Category[] => {
     return [defaultOption, ...fetchedCategories]
 }
 
+const handleResetFilter = () => {
+    shopStore.clearFilter()
+    submitFilter()
+}
+
 const submitFilter = () => {
-    queryProducts.value.categoryId = shopStore.categorySelected?.id
-    queryProducts.value.priceMin = shopStore.priceMin
-    queryProducts.value.priceMax = shopStore.priceMax
+    queryProducts.value.categoryId = shopStore.categorySelected?.id || undefined
+    queryProducts.value.priceMin = shopStore.priceMin || undefined
+    queryProducts.value.priceMax = shopStore.priceMax || undefined
 
     updateProducts()
     
 }
 
 onMounted(loadData);
-
-watch(() => query, (newValue: any) => {
-    queryProducts.value.priceMin = newValue.price_min
-    queryProducts.value.priceMax = newValue.price_max
-    queryProducts.value.categoryId =  newValue.categoryId
-    
-    loadData()
-})
-
 </script>

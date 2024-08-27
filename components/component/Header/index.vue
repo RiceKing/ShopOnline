@@ -10,8 +10,8 @@
                 <ShoppingCartIcon class="h-5 w-5 mr-2" />
                 Корзина
             </NuxtLink>
-            <span v-if="itemCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                0
+            <span v-if="totalCart" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {{ totalCart }}
             </span>
       </div>
     </div>
@@ -21,5 +21,9 @@
 <script lang="ts" setup>
 import { ShoppingCartIcon } from '@heroicons/vue/24/outline';
 
-const itemCount = ref(0)
+const cartStore = useCartStore();
+
+const totalCart = computed((): number => {
+    return cartStore?.totalCartProducts || 0 
+})
 </script>

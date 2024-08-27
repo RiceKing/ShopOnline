@@ -7,11 +7,11 @@
         
         <p class="mt-1 text-lg font-medium text-gray-900" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
             <span itemprop="price" content="">{{ product.price }}</span>
-            <span itemprop="priceCurrency" content="RUB"> ₽</span>
+            <span itemprop="priceCurrency" content="RUB">&nbsp;₽</span>
         </p>
 
-        <button @click="buyProduct" class="mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded">
-            В корзину
+        <button @click="handleAddProductToCart" :class="{'cursor-not-allowed opacity-50 hover:bg-gray-400 focus:outline-none': isDisabled}" class="mt-4 bg-blue-500 text-white font-bold py-2 px-4 rounded">
+            {{isDisabled ? 'Товар в корзине' : 'В корзину' }}
         </button>
         <meta itemprop="availability" content="http://schema.org/InStock" />
     </div>
@@ -28,8 +28,12 @@ const props = withDefaults(defineProps<Props>(), {
     product: null
 })
 
-const buyProduct = () => {
-    console.log('buyProduct')
+const isDisabled = ref(false)
+
+const cartStore = useCartStore();
+const handleAddProductToCart = (): void => {
+    cartStore.addProductToCart(props.product)
+    isDisabled.value = true
 }
 
 </script>
